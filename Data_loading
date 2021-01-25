@@ -1,0 +1,23 @@
+from torch.utils.data import DataLoader
+import numpy as np
+import cv2
+# load training data in batches
+batch_size = 10
+
+train_loader = DataLoader(transformed_dataset, 
+                          batch_size=batch_size,
+                          shuffle=True, 
+                          num_workers=1)
+print(train_loader)
+# obtain one batch of training images
+dataiter = iter(train_loader)
+images, labels = dataiter.next()
+#images = images.astype('float')
+images = images.numpy()
+
+# plot the images in the batch, along with the corresponding labels
+fig = plt.figure(figsize=(25, 4))
+for idx in np.arange(batch_size):
+    ax = fig.add_subplot(2, batch_size/2, idx+1, xticks=[], yticks=[])
+    ax.imshow(np.squeeze(images[idx]), cmap='gray')
+    ax.set_title(classes[labels[idx]])
